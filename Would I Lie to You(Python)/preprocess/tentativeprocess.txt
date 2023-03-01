@@ -1,0 +1,52 @@
+1) ?? 
+  - extracts audio from video [could this be folded into preprocess.sh?]
+  - e.g. on terminal:
+     % mkdir wav 
+     % sh preprocess/preprocess.sh filename2.mp4 filename1.mp4...
+
+2) On the Audio [Weeks 1-3]
+
+  2a) preprocess.sh
+    - converts mp3 to wav; samples to 16kHz; keeps only single channel
+
+  2b) use ESPNet to clean (enhance) and separate
+    - check if this helps [not clear that it does; anyway, the audio has to be chunked up first]
+
+  2c) diart
+    - diarize [how does this interact with 2b?]
+    Usage on terminal: python -m diart.stream /path/to/audio.wav
+    
+    - [ESPNet diarization is not ready yet]
+
+  2d) Run ASR [pick one]
+    ~2c.1) ESPNet~ [requires small small files!]
+    ~2c.2) Deepspeech~ [requires small small files!]
+    2c.3) wav2vec
+    
+  2e) Normalize ASR output: https://github.com/benob/recasepunc
+
+  2f) Run OpenSmile
+    - on the raw audio, the cleaned/separated audio....?
+    - which feature sets?
+    
+    Choose opensmile/config/is09-13/IS09_emotion.conf (2017 Levitan el.)
+    Usage: SMILExtract -C path/to/config/demo1.conf -I path/to/wav/opensmile.wav -O outputFileName.csv
+    
+  2g) Run python_speech_features
+    - install python_speech_features library
+    - see featureExtractor.ipynb; func:extract_mfcc()
+    - reference: https://python-speech-features.readthedocs.io/en/latest/
+
+3) On the Video [Weeks 3-5]
+  
+  3a) ?? convert to xx fps at xx by zz
+  
+  3b) ??
+    - identify major segments [stats on these?]
+
+  3c) Prodigy - annotate and correct segments, label each with name of contestant and as lie/truth
+
+  3c) feature extraction - refer to prior work and to tools Amanda will share
+  
+4) Modeling [Weeks 4-9]
+
